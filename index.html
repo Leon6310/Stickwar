@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Stickman Epic War</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<audio id="bgMusic" loop></audio>
+
+<div class="app-container">
+  
+  <div id="mainMenu" class="screen">
+    <h1>Stickman Epic War</h1>
+    <p style="color: #f1c40f; font-size: 20px; font-weight: bold; text-align: center; margin-top:-20px;">Edelsteine: <span id="menuGems">0</span> 💎</p>
+    <button id="btnToSetup" class="menu-btn">Match Setup</button>
+    <button id="btnToShop" class="menu-btn">Shop & Inventar</button>
+    <button id="btnToSpin" class="menu-btn" style="background-color: #f39c12; color: #111;">🎁 Daily Spin (Glücksrad)</button>
+    <button id="btnOpenSettings" class="menu-btn">Einstellungen & Codes</button>
+  </div>
+
+  <div id="setupScreen" class="screen hidden">
+    <h2>Schlacht-Setup</h2>
+    <div class="setting-row">
+      <label>Map auswählen:</label>
+      <select id="mapSelect"></select>
+    </div>
+    <div class="setting-row">
+      <label>Schwierigkeit:</label>
+      <select id="diffSelect">
+        <option value="0.5">Sehr Leicht</option>
+        <option value="1.0" selected>Normal</option>
+        <option value="1.5">Schwer</option>
+        <option value="2.5">Unmöglich</option>
+      </select>
+    </div>
+    <button id="btnStartGame" class="menu-btn" style="background-color: #2ecc71; color: #111;">Auf in die Schlacht!</button>
+    <button id="btnSetupToMenu" class="menu-btn">Zurück</button>
+  </div>
+
+  <div id="spinScreen" class="screen hidden">
+    <h2>Tägliches Glücksrad</h2>
+    <p style="color: #aaa; text-align:center;">Versuche dein Glück! (Nur 1x am Tag)</p>
+    <div id="spinBox" class="spin-box">? 💎</div>
+    <p id="spinResultText" style="color: #2ecc71; font-size: 20px; font-weight: bold; height: 30px;"></p>
+    <button id="btnDoSpin" class="menu-btn" style="background-color: #9b59b6; color: white;">Jetzt Drehen!</button>
+    <button id="btnSpinToMenu" class="menu-btn">Zurück zum Menü</button>
+  </div>
+
+  <div id="shopScreen" class="screen hidden">
+    <h2>Shop & Inventar</h2>
+    <p style="color: #f1c40f; font-size: 20px; font-weight: bold; margin-top:-10px;">Deine Edelsteine: <span id="shopGems">0</span> 💎</p>
+    
+    <div class="shop-grid">
+      <div class="shop-item" id="item_default"><h3>Standard</h3><div class="skin-preview"><div class="head" style="background:#ecf0f1;"></div><div class="body" style="background:#2980b9;"></div></div><p>0 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('default', 0)">Ausrüsten</button></div>
+      <div class="shop-item" id="item_shadow"><h3>Schatten</h3><div class="skin-preview"><div class="head" style="background:#333;"></div><div class="body" style="background:#111;"></div></div><p>50 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('shadow', 50)">Kaufen</button></div>
+      <div class="shop-item" id="item_gold"><h3>Gold-Garde</h3><div class="skin-preview"><div class="head" style="background:#f39c12;"></div><div class="body" style="background:#f1c40f;"></div></div><p>100 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('gold', 100)">Kaufen</button></div>
+      
+      <div class="shop-item" id="item_wood"><h3>Holz</h3><div class="skin-preview"><div class="head" style="background:#8B4513;"></div><div class="body" style="background:#A0522D;"></div></div><p>150 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('wood', 150)">Kaufen</button></div>
+      <div class="shop-item" id="item_metal"><h3>Metall</h3><div class="skin-preview"><div class="head" style="background:#C0C0C0;"></div><div class="body" style="background:#808080;"></div></div><p>200 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('metal', 200)">Kaufen</button></div>
+      <div class="shop-item" id="item_blood"><h3>Blutmond</h3><div class="skin-preview"><div class="head" style="background:#ff0000;"></div><div class="body" style="background:#8b0000;"></div></div><p>250 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('blood', 250)">Kaufen</button></div>
+      <div class="shop-item" id="item_ice"><h3>Frost-Ritter</h3><div class="skin-preview"><div class="head" style="background:#00ffff;"></div><div class="body" style="background:#0088ff;"></div></div><p>300 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('ice', 300)">Kaufen</button></div>
+      <div class="shop-item" id="item_candy"><h3>Candy</h3><div class="skin-preview"><div class="head" style="background:#FF69B4;"></div><div class="body" style="background:#FFC0CB;"></div></div><p>350 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('candy', 350)">Kaufen</button></div>
+      <div class="shop-item" id="item_toxic"><h3>Mutant</h3><div class="skin-preview"><div class="head" style="background:#adff2f;"></div><div class="body" style="background:#228b22;"></div></div><p>400 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('toxic', 400)">Kaufen</button></div>
+      
+      <div class="shop-item" id="item_water"><h3>Wasser 💧</h3><div class="skin-preview"><div class="head" style="background:#1E90FF;"></div><div class="body" style="background:#00BFFF;"></div></div><p>1500 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('water', 1500)">Kaufen</button></div>
+      <div class="shop-item" id="item_galaxy"><h3>Galaxie ✨</h3><div class="skin-preview"><div class="head" style="background:#e0b0ff;"></div><div class="body" style="background:#4b0082;"></div></div><p>2500 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('galaxy', 2500)">Kaufen</button></div>
+      <div class="shop-item" id="item_fire"><h3>Feuer 🔥</h3><div class="skin-preview"><div class="head" style="background:#FF4500;"></div><div class="body" style="background:#FF8C00;"></div></div><p>4000 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('fire', 4000)">Kaufen</button></div>
+      <div class="shop-item" id="item_radioactive"><h3>Radioaktiv ☢️</h3><div class="skin-preview"><div class="head" style="background:#39FF14;"></div><div class="body" style="background:#00FF00;"></div></div><p>7500 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('radioactive', 7500)">Kaufen</button></div>
+      <div class="shop-item" id="item_yinyang"><h3>Yin Yang ☯️</h3><div class="skin-preview"><div class="head" style="background:#FFFFFF; border: 1px solid black;"></div><div class="body" style="background:#000000; border: 1px solid white;"></div></div><p>10000 💎</p><button class="buy-btn" onclick="buyOrEquipSkin('yinyang', 10000)">Kaufen</button></div>
+    </div>
+    <button id="btnShopToMenu" class="menu-btn" style="margin-top: 15px;">Zurück</button>
+  </div>
+
+  <div id="settingsMenu" class="screen hidden">
+    <h2>Einstellungen & Codes</h2>
+    <div class="setting-row"><label>Musik:</label><select id="musicSelect"><option value="https://actions.google.com/sounds/v1/fantasy/fantasy_orchestral_music.ogg">Episches Orchester</option><option value="">Musik aus</option></select></div>
+    <div class="setting-row" style="margin-top: 20px; border-top: 1px solid #45a29e; padding-top: 20px;"><label style="color: #2ecc71;">Promo-Code:</label><input type="text" id="promoInput" placeholder="Geschenkcode..."></div>
+    <button id="btnRedeemPromo" style="background: #2ecc71; color: #111; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; margin-bottom: 20px;">Code Einlösen</button>
+    <div class="setting-row" style="border-top: 1px solid #45a29e; padding-top: 20px;"><label style="color: #e74c3c;">Geheimcode (Cheats):</label><input type="text" id="cheatInput" placeholder="Godmode Code..."></div>
+    <div style="display: flex; gap: 10px; justify-content: center;"><button id="btnCheat" style="background: #e74c3c; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; margin-bottom: 20px; font-weight: bold;">Cheat aktivieren</button><button id="btnCheatOff" style="background: #7f8c8d; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; margin-bottom: 20px; font-weight: bold; display: none;">Cheat Aus</button></div>
+    <button id="btnCloseSettings" class="menu-btn">Zurück zum Menü</button>
+  </div>
+
+  <div id="gameOverScreen" class="screen hidden">
+    <h1 id="gameOverText">Spielende</h1>
+    <p id="gemRewardText" style="font-size: 24px; color: #f1c40f;"></p>
+    <button id="btnBackToMenu" class="menu-btn">Zurück zum Menü</button>
+  </div>
+
+  <div id="gameScreen" class="screen hidden">
+    <div class="ui-panel">
+      <div class="stats">Gold: <span id="goldDisplay">100</span></div>
+      <div class="controls">
+        <button id="btnSword" class="btn-sword">Schwert (15)</button>
+        <button id="btnArcher" class="btn-archer">Bogen (25)</button>
+        <button id="btnNinja" class="btn-ninja">Ninja (35)</button>
+        <button id="btnKnight" class="btn-knight">Ritter (50)</button>
+        <button id="btnMage" class="btn-mage">Magier (80)</button>
+        <button id="btnTitan" class="btn-titan">Titan (200)</button>
+        <button id="btnPauseGame" style="background-color: #e74c3c; margin-left: 20px;">⏸ Pause</button>
+      </div>
+    </div>
+    <canvas id="gameCanvas" width="1000" height="400"></canvas>
+    
+    <div id="pauseOverlay" class="hidden">
+      <h1>PAUSIERT</h1>
+      <button id="btnResume" class="menu-btn">▶ Weiterkämpfen</button>
+      <button id="btnQuitMatch" class="menu-btn" style="background: #e74c3c; color: white; border-color: #c0392b;">Aufgeben & Menü</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
